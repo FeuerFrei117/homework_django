@@ -1,46 +1,25 @@
-window.onload = function () {
-    /*
-    // можем получить DOM-объект меню через JS
-    var menu = document.getElementsByClassName('menu')[0];
-    menu.addEventListener('click', function () {
-        console.log(event);
-        event.preventDefault();
-    });
-    
-    // можем получить DOM-объект меню через jQuery
-    $('.menu').on('click', 'a', function () {
-        console.log('event', event);
-        console.log('this', this);
-        console.log('event.target', event.target);
-        event.preventDefault();
-    });
-   
-    // получаем атрибут href
-    $('.menu').on('click', 'a', function () {
-        var target_href = event.target.href;
-        if (target_href) {
-            console.log('нужно перейти: ', target_href);
-        }
-        event.preventDefault();
-    });
-    */
-    
-    // добавляем ajax-обработчик для обновления количества товара
-    $('.basket_list').on('click', 'input[type="number"]', function () {
-        var target_href = event.target;
-        
-        if (target_href) {
-            $.ajax({
-                url: "/basket/edit/" + target_href.name + "/" + target_href.value + "/",
-                
-                success: function (data) {
-                    $('.basket_list').html(data.result);
-                    console.log('ajax done');
-                },
-            });
+"use strict";
 
-        }
-        event.preventDefault();
+window.onload = function () {
+    console.log('DOM ready');
+    $('.basket_record').on('change', "input[type='number']", function (event) {
+        let qty = event.target.value;
+        let basketItemPk = event.target.name;
+        console.log(basketItemPk, qty);
+        $.ajax({
+            url: "/basket/update/" + basketItemPk + "/" + qty + "/",
+            // data: {qty: qty, basketItemPk: basketItemPk},
+            // method: post,
+            success: function (data) {
+                // console.log(data);
+                if (data.status) {
+                    $('.basket_summary').html(data.basket_summary);
+                    // $('.basket_summary').html(data.basket_summary);
+                }
+            },
+        });
+        // send to backend
+        // get from backend
+        // do smth in DOM
     });
-    
 }
