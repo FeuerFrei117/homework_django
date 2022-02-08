@@ -6,7 +6,7 @@
     </li>
     <li>
         <a href="{% url 'adminapp:user_list' %}"
-           class="{% if 'users' in request.resolver_match.url_name%}
+           class="{% if 'user' in request.resolver_match.url_name%}
 active
 {% endif %}">
             пользователи
