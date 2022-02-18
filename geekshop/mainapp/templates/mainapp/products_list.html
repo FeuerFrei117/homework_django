@@ -20,6 +20,16 @@
                     Категория: "{{ category_item.name|title }}"
                 </h2>
             </div>
+            <div class="pagination">
+                {% if products.has_previous %}
+                    <a href="{% url 'mainapp:category_page' category_item.pk products.previous_page_number %}"><<</a>
+{#                    <a href="{% url 'mainapp:category' category.pk %}?p={{ products.previous_page_number }}"><<</a>#}
+                {% endif %}
+                {{ products.number }} / {{ products.paginator.num_pages }}
+                {% if products.has_next %}
+                    <a href="{% url 'mainapp:category_page' category_item.pk products.next_page_number %}">>></a>
+                {% endif %}
+            </div>
             <div class="related-products clearfix">
                 {% for product in products %}
                     <div class="block">
