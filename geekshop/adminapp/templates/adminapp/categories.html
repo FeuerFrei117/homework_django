@@ -9,7 +9,7 @@
             </a>
         </button>
         {% for object in object_list %}
-            <div class="category_record">
+            <div class="category_record {% if not object.is_active %}not_active{% endif %}">
                 <div class="category_name">
                     {{ object.name|title }}
                 </div>
@@ -24,9 +24,14 @@
                             редактировать
                         </a>
                     </button>
+                    {% csrf_token %}
                     <button>
-                        <a href={% url 'adminapp:category_delete' object.pk %}>
-                            удалить
+                        <a methods="post" type="submit" href={% url 'adminapp:category_delete' object.pk %}>
+                            {% if object.is_active %}
+                                удалить
+                            {% else %}
+                                восстановить
+                            {% endif %}
                         </a>
                     </button>
                 </div>
